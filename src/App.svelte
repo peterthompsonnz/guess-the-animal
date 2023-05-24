@@ -1,77 +1,10 @@
 <!-- App.svelte -->
 <script>
-  const animals = [
-    'lion',
-    'tiger',
-    'elephant',
-    'giraffe',
-    'zebra',
-    'cheetah',
-    'hippopotamus',
-    'rhino',
-    'kangaroo',
-    'koala',
-    'panda',
-    'gorilla',
-    'monkey',
-    'leopard',
-    'crocodile',
-    'alligator',
-    'snake',
-    'turtle',
-    'ostrich',
-    'flamingo',
-    'penguin',
-    'dolphin',
-    'whale',
-    'shark',
-    'octopus',
-    'seahorse',
-    'jellyfish',
-    'starfish',
-    'crab',
-    'lobster',
-    'squid',
-    'butterfly',
-    'bee',
-    'ladybug',
-    'ant',
-    'grasshopper',
-    'caterpillar',
-    'spider',
-    'scorpion',
-    'bat',
-    'owl',
-    'eagle',
-    'falcon',
-    'hawk',
-    'parrot',
-    'hummingbird',
-    'pigeon',
-    'sparrow',
-    'robin',
-    'pelican',
-    'cow',
-    'horse',
-    'sheep',
-    'goat',
-    'pig',
-    'dog',
-    'cat',
-    'rabbit',
-    'mouse',
-    'rat',
-    'hamster',
-    'guineapig',
-    'chimpanzee',
-    'sloth',
-    'squirrel',
-    'polarbear',
-  ]
+  import { animals } from './lib/animalNames.js'
 
   let selectedAnimal = ''
   let guessCount = 0
-  let guessLimit = 5
+  let guessLimit = 7
   let incorrectGuesses = []
   let correctGuesses = []
   let guessInput = ''
@@ -90,7 +23,7 @@
     guessCount = 0
     guessInput = ''
     incorrectGuesses = []
-    correctGuesses = Array(selectedAnimal.length).fill('*')
+    correctGuesses = Array(selectedAnimal.length).fill('_')
     isGameOver = false
   }
 
@@ -128,7 +61,10 @@
   }
 </script>
 
-<header><h1>Guess the animal's name</h1></header>
+<header>
+  <h1>Guess the animal's<br />name</h1>
+  <img src="robot.png" alt="" />
+</header>
 
 <main>
   {#if !selectedAnimal}
@@ -147,7 +83,7 @@
         <p>Congratulations, you guessed the animal!</p>
       {:else}
         <p>
-          Game Over, you used all your guesses. The animal was <span
+          Game Over, you used all your guesses. The animal was: <span
             class="incorrect">{selectedAnimal}</span
           >.
         </p>
@@ -177,48 +113,53 @@
     margin-bottom: 1rem;
     font: inherit;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 2px solid #6eaafd;
     padding: 0 0.15rem;
     line-height: 0;
   }
   h1 {
-    font-size: 2rem;
-    line-height: 1.1;
-    color: #64c6ff;
-  }
+    font-size: 1.85rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 1.4;
+    color: #6eaafd;
+  } 
   button {
     display: inline-block;
     font: inherit;
     line-height: 1.2;
     border-radius: 8px;
-    border: 1px solid #ccc;
-    padding: 0.1rem 0.5rem;
-    color: #1b1b1b;
-    background-color: #64c6ff;
-    margin-left: 1rem;
+    border: 2px solid #c6d7f9;
+    padding: 0.2rem 0.5rem;
+    color: #09081a;
+    background-color: #6eaafd;   
     cursor: pointer;
     transition: border-color 0.25s;
   }
   button:hover {
-    border-color: #646cff;
+    border-color: #6eaafd;
   }
   button:focus,
   button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
   }
-  .correct {
-    color: limegreen;
-  }
   .incorrect {
-    color: orangered;
+    color: #6eaafd;
   }
   .correct,
   .incorrect,
   .goes-left {
+    display: inline-block;
+    margin-left: 0.5rem;
     letter-spacing: 0.1rem;
-    font-weight: bold;
+    font-size: 1.2em;
+  }
+  .correct {
+    color: #6eaafd;
+    letter-spacing: 0.3rem;
   }
   .goes-left {
-    color: #64c6ff;
+    color: #6eaafd;
   }
 </style>
