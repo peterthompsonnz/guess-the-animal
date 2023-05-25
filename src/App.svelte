@@ -174,7 +174,9 @@
   .play-button {
     margin-top: 1rem;
   }
-  .cute-robot {
+  .cute-robot {    
+    max-width: 100%;
+    height: auto;
     margin-bottom: 1rem;
   }
 </style>
