@@ -2,6 +2,7 @@
 <script>
   import { animals } from './lib/animalNames.js'
 
+  const randomAnimals = animals.sort((a, b) => 0.5 - Math.random())
   let selectedAnimal = ''
   let guessCount = 0
   let guessLimit = 7
@@ -9,21 +10,20 @@
   let correctGuesses = []
   let guessInput = ''
   let isGameOver = false
-  let selectedAnimals = []
+  let animalIndex = 0
+  const blankLetterCharacter = '_'
 
   $: goesLeft = guessLimit - guessCount
 
   function startGame() {
-    // Select an animal and make sure it has not already been used in this game session
-    selectedAnimal = animals[Math.floor(Math.random() * animals.length)]
-    while (selectedAnimals.includes(selectedAnimal)) {
-      selectedAnimal = animals[Math.floor(Math.random() * animals.length)]
-    }
-    selectedAnimals.push(selectedAnimal)
+    // As array of names has been randomly sorted, step through it from the start and wrap around if the end has been reached
+    selectedAnimal = randomAnimals[animalIndex]
+    animalIndex < randomAnimals.length - 2 ? animalIndex++ : (animalIndex = 0)
+
     guessCount = 0
     guessInput = ''
     incorrectGuesses = []
-    correctGuesses = Array(selectedAnimal.length).fill('_')
+    correctGuesses = Array(selectedAnimal.length).fill(blankLetterCharacter)
     isGameOver = false
   }
 
@@ -33,8 +33,11 @@
       !guessInput.length ||
       incorrectGuesses.includes(guessInput) ||
       correctGuesses.includes(guessInput)
-    )
+    ) {
+      // clear input box because if either of the last two conditions are true more than one letter can be entered and processed
+      guessInput = ''
       return
+    }
 
     if (selectedAnimal.includes(guessInput)) {
       for (let i = 0; i < selectedAnimal.length; i++) {
@@ -63,7 +66,7 @@
 
 <header>
   <h1>Guess the animal's<br />name</h1>
-  <img src="robot.png" alt="" />
+  <img src="robot.png" alt="" class="cute-robot"/>
 </header>
 
 <main>
@@ -88,9 +91,9 @@
           >.
         </p>
       {/if}
-      <button on:click={startGame}>Play Again</button>
+      <button class="play-button" on:click={startGame}>Play Again</button>
     {:else}
-      <div>
+      <div class="letter-input">
         <label for="guess-input">Guess a letter:</label>
         <input
           type="text"
@@ -100,7 +103,7 @@
           on:keyup={guessLetter}
           use:init
         />
-        <button on:click={guessLetter}>Guess</button>
+        <!-- <button on:click={guessLetter}>Guess</button> -->
       </div>
     {/if}
   {/if}
@@ -111,11 +114,11 @@
     display: inline-block;
     margin-left: 0.25rem;
     margin-bottom: 1rem;
-    font: inherit;
+    font: inherit;    
     border-radius: 8px;
     border: 2px solid #6eaafd;
     padding: 0 0.15rem;
-    line-height: 0;
+    line-height: 0;       
   }
   h1 {
     font-size: 1.85rem;
@@ -124,7 +127,10 @@
     text-transform: uppercase;
     line-height: 1.4;
     color: #6eaafd;
-  } 
+  }
+  p {
+    margin: 0.3rem 0;
+  }  
   button {
     display: inline-block;
     font: inherit;
@@ -133,7 +139,7 @@
     border: 2px solid #c6d7f9;
     padding: 0.2rem 0.5rem;
     color: #09081a;
-    background-color: #6eaafd;   
+    background-color: #6eaafd;
     cursor: pointer;
     transition: border-color 0.25s;
   }
@@ -161,5 +167,14 @@
   }
   .goes-left {
     color: #6eaafd;
+  }
+  .letter-input {
+    margin-top: 1rem;
+  }
+  .play-button {
+    margin-top: 1rem;
+  }
+  .cute-robot {
+    margin-bottom: 1rem;
   }
 </style>
