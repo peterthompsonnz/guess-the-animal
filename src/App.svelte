@@ -66,7 +66,7 @@
 
 <header>
   <h1>Guess the animal's<br />name</h1>
-  <img src="robot.png" alt="" class="cute-robot"/>
+  <img src="robot.png" alt="" class="cute-robot" width="250" height="230"/>
 </header>
 
 <main>
